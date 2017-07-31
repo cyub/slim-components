@@ -1,10 +1,3 @@
-# Slim Framework 3 脚手架程序
+# Slim Framework 3 通用组件包
 
-通过此脚手架程序快速构建Slim应用
-
-## 安装
-
-```
-php composer.phar create-project tink/slim-skeleton [app-name]
-```
-其中app-name是你的应用名称
+用于[cyub/slim-skeleton](https://github.com/cyub/slim-skeleton)搭建脚手架程序
