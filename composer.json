@@ -1,0 +1,25 @@
+{
+    "name": "tink/slim-components",
+    "description": "A slim framework 3 common components collection",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "tink",
+            "email": "qietingfy@gmail.com"
+        }
+    ],
+    "require": {
+        "monolog/monolog": "^1.17",
+        "illuminate/database":"~5.1",
+        "illuminate/validation":"~5.2",
+        "doctrine/cache":"^1.6.0",
+        "slim/twig-view": "^2.2",
+        "slim/php-view": "^2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tink\\Common\\": "src/"
+        }
+    }
+}
