@@ -17,13 +17,14 @@ class TwigViewServiceProvider implements ServiceProviderInterface
 			if (empty($config)) {
                 throw new InvalidArgumentException('view configure missed');
             }
-			$view = new Twig($config['view_path'], [
-				'cache' => $config['compiled_path'],
+            
+			$view = new Twig($config['path'], [
+				'cache' => $config['cache'],
 			]);
 
 			$basePath = rtrim(str_ireplace('index.php', '', $c['request']->getUri()->getBasePath()), '/');
     		$view->addExtension(new TwigExtension($c['router'], $basePath));
-    		var_dump(get_class($view));
+
     		return $view;
 		};
 
