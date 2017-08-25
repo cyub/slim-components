@@ -7,37 +7,25 @@ use Exception;
 
 class Configure 
 {
-	protected $environment;
 	protected $configPath;
 	protected $configExt = '.php';
 
-	public function __construct($configurePath = null, $environment = null)
+	public function __construct($configurePath)
 	{
 		$this->setConfigPath($configurePath);
-		$this->setEnvironment($environment);
 	}
 
 	public function setConfigPath($path)
 	{
-		if ($path) {
-			$this->configPath = $path;
-		} else {
-			$this->configPath = realpath(dirname($_SERVER['DOCUMENT_ROOT']));
-		}
-		
+		$this->configPath = $path;
 		return $this;
-	}
-
-	public function setEnvironment($environment)
-	{
-		$this->environment = $environment;
 	}
 
 	public function get($key, $default = null)
 	{
 		list($fileName) = explode('.', $key);
 
-        $path = $this->configPath . '/' . $this->environment . '/' . $fileName . $this->configExt;
+        $path = $this->configPath . '/' . $fileName . $this->configExt;
         $configure = $this->load($path);
 
         return Arr::get([$fileName => $configure], $key, $default);

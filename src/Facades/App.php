@@ -42,6 +42,6 @@ class App extends Facade
 
 	public static function environment()
 	{
-		return isset($_SERVER['SLIM_ENV']) ? $_SERVER['SLIM_ENV'] : self::$app->getContainer()->get('settings')['mode'];
+		return getenv('MODE');
 	}
 }
