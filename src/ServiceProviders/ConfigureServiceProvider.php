@@ -12,7 +12,7 @@ class ConfigureServiceProvider implements ServiceProviderInterface
     public function register(Container $container)
     {
         $container['configure'] = function ($c) {
-        	$configurePath = empty($c['settings']['configurePath']) ? $c->get('basePath') : $c['settings']['configurePath'];
+        	$configurePath = empty($c['settings']['configurePath']) ? $c->get('basePath') . '/config' : $c['settings']['configurePath'];
             return new ConfigureService($configurePath ,$c['settings']['mode']);
         };
     }
