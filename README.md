@@ -105,4 +105,4 @@ PHP原生语言模板引擎提供者，依赖[slim/php-view](https://github.com/
 
 ## 中间件
 现在支持的中间件有:
-* [Cors](http://www.baidu.com) 支持跨站资源共享配置
+* [Cors](https://github.com/cyub/slim-components/blob/master/src/Middlewares/Cors.php) 支持跨站资源共享配置
