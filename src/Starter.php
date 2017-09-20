@@ -3,7 +3,7 @@
 namespace Tink\Common;
 
 use Slim\App;
-use Exception;
+use InvalidArgumentException;
 use Slim\Http\Environment;
 use Tink\Common\ServiceProviders\Provider;
 use Tink\Common\ServiceProviders\DotenvServiceProvider;
@@ -11,13 +11,13 @@ use Tink\Common\ServiceProviders\ConfigureServiceProvider;
 
 class Starter
 {
-    private $app;
-    private $basePath;
-    private $isBooted;
+    private $app; // the slim application
+    private $basePath; // the basepath of slim application
+    private $isBooted; // the core of appliction's services isbooted
 
     /**
-     * Create Starter for manage application(Slim\App)
-     * @param string $basePath the basepath of application
+     * Create Starter for manage slim application
+     * @param string $basePath the basepath of slim application
      */
     public function __construct($basePath)
     {
@@ -26,7 +26,7 @@ class Starter
 
     /**
      * Set application
-     * @param App $app instance of Slim\App
+     * @param $app instance of Slim\App
      */
     public function setApplication(App $app)
     {
@@ -35,10 +35,20 @@ class Starter
     }
 
     /**
+     * Get application
+     * @return $app instance of Slim\App
+     */
+    public function getApplication()
+    {
+        return $this->app;
+    }
+
+    /**
      * Boot the starter
+     * @param  callable|null $callback the callback of all pre-boot services
      * @return
      */
-    public function boot()
+    public function boot(callable $callback = null)
     {
         if ($this->isBooted) {
             return;
@@ -48,10 +58,13 @@ class Starter
         $this->bootServiceProvider();
         $this->bootRoutes();
         $this->isBooted = true;
+        if ($callback) {
+            call_user_func($callback);
+        }
     }
 
     /**
-     * Detect application is running console
+     * Detect application is running in console
      * @return boolean
      */
     public function isRunInConsole()
@@ -78,6 +91,7 @@ class Starter
                 'REQUEST_URI' => '/' . implode('/', array_slice($argv, 1)),
             ]);
         }
+
         return $this;
     }
 
@@ -121,14 +135,22 @@ class Starter
     }
 
     /**
+     * run the slim application
+     * @return void;
+     */
+    public function runApplication()
+    {
+        $this->app->run();
+    }
+
+    /**
      * Run starter
      */
     public function run()
     {
         if (!$this->app instanceof App) {
-            throw new Exception('app must is Slim\App Object');
+            throw new InvalidArgumentException('app must is Slim\App Object');
         }
-        $this->prepare()->boot();
-        $this->app->run();
+        $this->prepare()->boot([$this, 'runApplication']);
     }
 }
